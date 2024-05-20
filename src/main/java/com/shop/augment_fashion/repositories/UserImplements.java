@@ -36,8 +36,58 @@ public class UserImplements implements UserRepository{
     @Override
     @Transactional
     public JSONObject getUser(JSONObject jsonUser, JSONObject jsonResponse){
-        
-        return null;
+        try{
+            if(!jsonUser.toString().contains("cemail") || !jsonUser.toString().contains("cpassword") ){
+                jsonResponse.put("codeUser", 401);
+                jsonResponse.put("messageUser","[UserImplement] some name within the JSON is not valid");
+            }else{
+                /*String queryMail = "FROM UserModel WHERE "
+                +"cemail = '"+ newUser.getString("cemail")+"'";
+                List<UserModel> lstUserMail = entityManager.createQuery(queryMail).getResultList();
+    
+                    String queryNickname = "FROM UserModel WHERE "
+                    +"cnickname = '"+ newUser.getString("cnickname")+"'";
+                    List<UserModel> lstUserNickname = entityManager.createQuery(queryNickname).getResultList();
+    
+                if(!lstUserMail.isEmpty()){
+                    jsonResponse.put("codeUser", 406);
+                    jsonResponse.put("messageUser","[UserImplement] The email already exists");
+                }else if(!lstUserNickname.isEmpty()){
+                    jsonResponse.put("codeUser", 406);
+                    jsonResponse.put("messageUser","[UserImplement] The nickname already exists");
+                }else{
+                        
+                        UserModel userM = new UserModel();
+                        userM.setCfirst_name(newUser.getString("cfirst_names"));
+                        userM.setCsurnames(newUser.getString("csurnames"));
+                        userM.setCnickname(newUser.getString("cnickname"));
+                        userM.setCemail(newUser.getString("cemail"));
+    
+                        //String password = newUser.getString("cpassword");
+                        //Argon2PasswordEncoder arrSpringSecurity = new Argon2PasswordEncoder(16, 32, 1, 60000, 10);
+                        //String hasheo = arrSpringSecurity.encode(password);
+    
+                        userM.setCpassword(newUser.getString("cpassword"));
+                        userM.setCphone(newUser.getString("cphone"));
+                        userM.setNrole(2);
+                        userM.setNid_Address(nid_address);
+                        userM.setCnumber_credit_card(newUser.getString("cnumber_credit_card"));
+                        userM.setBenable(true);
+    
+                        entityManager.merge(userM);
+    
+                        jsonResponse.put("codeUser", 200);
+                        jsonResponse.put("messageUser","[UserImplement] User Created");
+                    }
+                */}
+            }catch(JSONException e){
+                jsonResponse.put("codeUser", 400);
+                jsonResponse.put("messageUser","[UserImplement] JSONException, There was an error reading the JSON");
+            }catch(Exception e){
+                jsonResponse.put("codeUser", 400);
+                jsonResponse.put("messageUser","[UserImplement] Unexpected Error");
+            }
+            return jsonResponse;
     }
 
     @Override

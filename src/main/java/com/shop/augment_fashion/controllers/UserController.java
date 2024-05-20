@@ -66,7 +66,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/Access",method=RequestMethod.POST)
-    public String getUser(@RequestBody String newUser){
+    public String getUser(@RequestBody String userAccess){
 
         return null;
     }
