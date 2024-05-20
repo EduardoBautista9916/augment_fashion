@@ -30,9 +30,19 @@ public class AddressImplements implements AddressRepository {
 
     @Override
     @Transactional
-    public AddressModel getAddress(int nid_address){
+    public JSONObject getAddress(int nid_address){
         AddressModel address = entityManager.find(AddressModel.class, nid_address);
-        return address;
+        JSONObject jsonAddress = new JSONObject();
+
+        jsonAddress.put("cstreet",address.getCstreet());
+        jsonAddress.put("coutdoor_number",address.getCoutdoor_number());
+        jsonAddress.put("cinterior_number",address.getCinterior_number());
+        jsonAddress.put("ccologne",address.getCcologne());
+        jsonAddress.put("ctown_hall",address.getCtown_hall());
+        jsonAddress.put("cstate",address.getCstate());
+        jsonAddress.put("ccountry",address.getCstate());
+
+        return jsonAddress;
     }
 
     @Override
