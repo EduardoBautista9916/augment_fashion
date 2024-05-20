@@ -1,5 +1,6 @@
 package com.shop.augment_fashion.repositories;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -109,10 +110,9 @@ public class ClothesImplements implements ClothesRepository{
         System.out.println(lstClothes.size());
         //ClothesModel auxClothes = new ClothesModel();
         for(ClothesModel i : lstClothes){
-            /*for(ClothesModel j : lstClothes){ 
 
-            }*/
             jsonAux = new JSONObject();
+            jsonAux.put("nid_clothes", i.getNid_clothes());
             jsonAux.put("cimage", i.getCimage());
             jsonAux.put("cdescription", i.getCdescription());
             jsonAux.put("cmaterial", i.getCmaterial());
@@ -124,14 +124,29 @@ public class ClothesImplements implements ClothesRepository{
             
             jsonArrayResponse.put(jsonAux);
         }
-        /*System.out.println(lstClothes.get(0).getCdescription());
-        System.out.println(lstClothes.get(0).getCmaterial());
-        System.out.println(lstClothes.get(0).getCcolor());
-        System.out.println(lstClothes.get(0).getCtype_clothes());*/
-
-
-        
-
         return jsonArrayResponse;
+    }
+
+    @Override
+    @Transactional
+    public JSONObject deleteClothes(int nid_clothes, JSONObject jsonResponse){
+        try{
+            ClothesModel clothes = entityManager.find(ClothesModel.class, nid_clothes);
+            clothes.setBenable(false);
+            clothes.setDcancellation_date(LocalDateTime.now());
+            entityManager.merge(clothes);
+
+            jsonResponse.put("codeClothes", 200);
+            jsonResponse.put("messageClothes", "[ClothesImplements] Clothes successfully removed");
+        }catch(JSONException e){
+            jsonResponse.put("codeClothes", 401);
+            jsonResponse.put("messageClothes", "[ClothesImplements] Error in JSON");
+        }catch(Exception e){
+            jsonResponse.put("codeClothes", 401);
+            jsonResponse.put("messageClothes", "[ClothesImplements] Unexpected Error");
+        }
+
+
+        return jsonResponse;
     }
 }

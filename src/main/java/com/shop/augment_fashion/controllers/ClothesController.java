@@ -3,6 +3,7 @@ package com.shop.augment_fashion.controllers;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -51,5 +52,14 @@ public class ClothesController {
         jsonResponse.put("products",jsonArrayResponse);
         return jsonResponse.toString();
     }
+
+    @RequestMapping(value = "/Clothes/{nid_clothes}",method=RequestMethod.DELETE)
+    public String deleteClothes(@PathVariable int nid_clothes){
+        JSONObject jsonResponse;
+        jsonResponse = clothes.deleteClothes(nid_clothes, new JSONObject());
+        return jsonResponse.toString();
+    }
+
+
 
 }
