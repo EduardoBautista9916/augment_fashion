@@ -25,7 +25,7 @@ public class ClothesController {
     @Autowired
     private CategoriesRepository categories;
 
-    @RequestMapping(value = "/newClothes",method=RequestMethod.POST)
+    @RequestMapping(value = "/Clothes",method=RequestMethod.POST)
     public String insertClothes(@RequestBody String newClothes){
         JSONObject jsonClothes, jsonResponse;
         jsonClothes = new JSONObject(newClothes);
