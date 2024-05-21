@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.shop.augment_fashion.models.UserModel;
@@ -32,10 +33,15 @@ public class UserImplements implements UserRepository{
         return entityManager.createQuery(query).getResultList();
     }
 
+    @Autowired
+    AddressRepository addressrepo;
+
+    @SuppressWarnings("unchecked")
     @Override
     @Transactional
     public JSONObject getUser(JSONObject jsonUser, JSONObject jsonResponse){
         try{
+            
             if(jsonUser.toString().contains("cemail") || jsonUser.toString().contains("cpassword") ){
                 String queryAccess = "FROM UserModel Where " + 
                 "cemail = '"+ jsonUser.getString("cemail") + 
@@ -52,9 +58,8 @@ public class UserImplements implements UserRepository{
                     jsonResponse.put("cnickname",lstUserAccess.get(0).getCnickname());
                     jsonResponse.put("cemail",lstUserAccess.get(0).getCemail());
                     jsonResponse.put("cphone",lstUserAccess.get(0).getCphone());
-                    jsonResponse.put("crole",lstUserAccess.get(0).getCrole());
+                    jsonResponse.put("crole",lstUserAccess.get(0).getNrole());
                     jsonResponse.put("cnumber_credit_card",lstUserAccess.get(0).getCnumber_credit_card());
-                    AddressRepository addressrepo = new AddressRepository();
                     jsonResponse.put("oaddress",addressrepo.getAddress(lstUserAccess.get(0).getNid_Address()));
                 }else{
                     jsonResponse.put("codeUser", 402);
@@ -78,9 +83,8 @@ public class UserImplements implements UserRepository{
                     jsonResponse.put("cnickname",lstUserAccess.get(0).getCnickname());
                     jsonResponse.put("cemail",lstUserAccess.get(0).getCemail());
                     jsonResponse.put("cphone",lstUserAccess.get(0).getCphone());
-                    jsonResponse.put("crole",lstUserAccess.get(0).getCrole());
+                    jsonResponse.put("crole",lstUserAccess.get(0).getNrole());
                     jsonResponse.put("cnumber_credit_card",lstUserAccess.get(0).getCnumber_credit_card());
-                    AddressRepository addressrepo = new AddressRepository();
                     jsonResponse.put("oaddress",addressrepo.getAddress(lstUserAccess.get(0).getNid_Address()));
                 }else{
                     jsonResponse.put("codeUser", 402);

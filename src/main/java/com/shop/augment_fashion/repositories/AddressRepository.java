@@ -13,7 +13,7 @@ import com.shop.augment_fashion.models.AddressModel;
 public interface AddressRepository {
     List<AddressModel> getAddresses();
 
-    AddressModel getAddress(int nid_user);
+    JSONObject getAddress(int nid_user);
 
     void delAddress(int nid_address);
 
